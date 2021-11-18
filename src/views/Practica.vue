@@ -6,7 +6,7 @@
         <input type="text" placeholder="Que quieres buscar?">
         <input type="submit" value="Buscar">
     </form>
-    <!--<h1>{{box.id}}</h1>-->
+    
    
     <div class="container"> 
             <div class="card">
@@ -15,37 +15,50 @@
                         <th>Hamburguesa</th>
                         <th>Actions</th>
                     </tr>
-                    <td>Nombre: ' ' <br> Ingredientes: ' ' <br>Calorias: ' '</td>
-                    <td><button>Editar</button></td>   
+                    <td>Nombre: {{burguer.nombre}} <br> Ingredientes:{{burguer.ingredientes}} <br>Calorias:{{burguer.calorias}}</td>
+                    <td>
+                        <div>
+                            <h1>Edita el Menu</h1>
+                            <form class="form_burguer">
+                                <input  type="text" placeholder="Nombre"/>
+                                <input type="text" placeholder="Ingredientes"/>
+                                <input  type="text" placeholder="Calorias"/>
+                                <input  type="text" placeholder="ID"/>
+                                <button class="boton">Agregar</button>
+                            </form>
+                        </div>
+                    </td>   
                 </table>    
             </div>     
     </div>
-    <div>
-    <h1>Edita el Menu</h1>
-    <form class="form_burguer">
-      <input  type="text" placeholder="Nombre"/>
-      <input type="text" placeholder="Ingredientes"/>
-      <input  type="text" placeholder="Calorias"/>
-      <input  type="text" placeholder="ID"/>
-      <button class="boton">Agregar</button>
-    </form>
-  </div>
 </template>
 
 <script>
-
-
+import {mapGetters} from 'vuex';
+import {mapActions} from 'vuex';
 export default {
-    setup(){
-        
-        
-        
-        return{
-            
-        }
-    }
+    name:'Practica',
+    computed:{
+        ...mapGetters([
+            'burguer'
+        ])
+    },
+    mounted() {
+        this.GET_BURGUER(this.$route.params.id)
+        console.log(this.$route.params)
+    },
+    methods:{
+        ...mapActions([
+            'GET_BURGUER'
+        ])
+    },
+    
 }
 </script>
+
+
+
+
 
 <style lang="css">
 .Caja{

@@ -23,7 +23,7 @@
       <tbody>
         <tr v-for="(burguer, index) in filterBurguers" :key="burguer.id">
           <td>{{index}}</td>
-          <td>{{burguer.nombre}}</td>
+          <td><router-link @click="editBurguer(burguer.id)" class="link" to="/practica/:id">{{burguer.nombre}}</router-link></td>
           <td>{{burguer.calorias}}</td>
           <td>
             <button @click="deleteBurguer(burguer.id)" >Eliminar</button>
@@ -80,6 +80,7 @@ export default {
     },
     //Metodo para agregar una hamburguesa
     addBurguer(){
+      //Validacion para no enviar campos vacios
       if(JSON.stringify(this.menu)!='{}'){
         const burguer = this.menu
         this.filterBurguers.push(burguer)
@@ -91,7 +92,12 @@ export default {
     //Metodo para eliminar una Hamburguesa
     deleteBurguer(id){
         let remove = id
-        this.filterBurguers = this.filterBurguers.filter((burguer)=>{ return burguer.id !== remove})
+        let result = confirm("Estas seguro de Eliminar?")
+        if(result == true){
+          this.filterBurguers = this.filterBurguers.filter((burguer)=>{ return burguer.id !== remove})
+        }else{
+          console.log("no se ha borrado")
+        }
     },
     //Metodo para editar una hamburguesa
     editBurguer(id){
@@ -99,7 +105,8 @@ export default {
       console.log(id)
 
 
-      this.$router.push('Practica')
+      this.$router.push(`/practica/${id}`) //('practica' + id)
+
     }
   },
 };
@@ -128,5 +135,10 @@ export default {
    flex-direction: column;
    width: 80%;
    align-items: center;
+ }
+ .link{
+   text-decoration: none;
+   color: white;
+
  }
 </style>

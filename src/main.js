@@ -4,7 +4,11 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
+//VUEX
+import store from './store/index'
+
 const app = createApp(App)
+app.use(store)
 app.use(router)
 app.use(VueAxios, axios)
 app.mount('#app')
