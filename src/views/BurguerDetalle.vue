@@ -1,13 +1,5 @@
 <template>
-  <h1>Practica</h1>
-  
-
-    <form @submit.prevent="saludo()" class="Caja">
-        <input type="text" placeholder="Que quieres buscar?">
-        <input type="submit" value="Buscar">
-    </form>
-    
-   
+  <h1>Detalle Hamburguesa</h1>   
     <div class="container"> 
             <div class="card">
                 <table class="card1">
@@ -15,19 +7,21 @@
                         <th>Hamburguesa</th>
                         <th>Actions</th>
                     </tr>
-                    <td>Nombre: {{burguer.nombre}} <br> Ingredientes:{{burguer.ingredientes}} <br>Calorias:{{burguer.calorias}}</td>
                     <td>
-                        <div>
+                        
+                        <pre>{{burguer[0]}}</pre>
+                        <div class="edit_container">
                             <h1>Edita el Menu</h1>
                             <form class="form_burguer">
                                 <input  type="text" placeholder="Nombre"/>
                                 <input type="text" placeholder="Ingredientes"/>
                                 <input  type="text" placeholder="Calorias"/>
                                 <input  type="text" placeholder="ID"/>
-                                <button class="boton">Agregar</button>
+                                <button @click="handleSubmit()" class="boton">Agregar</button>
                             </form>
                         </div>
-                    </td>   
+                    </td> 
+                    <td><button class="boton" @click="handleEdit()">Editar</button></td>
                 </table>    
             </div>     
     </div>
@@ -40,17 +34,25 @@ export default {
     name:'Practica',
     computed:{
         ...mapGetters([
-            'burguer'
+            'burguer',
         ])
     },
     mounted() {
         this.GET_BURGUER(this.$route.params.id)
-        console.log(this.$route.params)
     },
     methods:{
         ...mapActions([
-            'GET_BURGUER'
-        ])
+            'GET_BURGUER',
+            'EDIT_BURGUER'
+        ]),
+        handleSubmit(){
+            console.log("click")
+        },
+        handleEdit(){
+            const a = document.querySelector('.edit_container')
+            console.log(a)
+            a.classList.toggle("show")
+        }
     },
     
 }
@@ -61,9 +63,7 @@ export default {
 
 
 <style lang="css">
-.Caja{
-    background-color: red;
-}
+
 .card{  
     display: grid;
     grid-template-columns: 1fr;
@@ -74,12 +74,12 @@ export default {
     border: 1px solid black;
 }
 
-.card1 tr td{
-    border: 1px solid black;
-    padding: 10px;
+.card1 td span{
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 .boton{
-   width: 20%;
+   width: 50%;
    border-radius: 100%;
    margin: 5px 5px;
 }
@@ -96,5 +96,14 @@ export default {
 }
 .header th{
     border-bottom: 1px solid black;
+}
+.edit_container{
+    display: none;
+}
+.show{
+    display: block;
+}
+p{
+    font-weight: bold;
 }
 </style>
